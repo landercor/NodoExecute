@@ -1,0 +1,51 @@
+{
+  "name": "NodoExecute",
+  "version": "1.0.0",
+  "description": "\"pruebas de gestion en conocimiento.\"",
+  "keywords": [
+    "utilidad",
+    "helper",
+    "seguridad",
+    "argon2",
+    "Sanitización de datos"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "tst-logs"
+  },
+  "license": "MIT",
+  "author": "Landercor",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon server.js",
+    "start": "npm run dev",
+    "test": "node src/infrastructure/database/tst-connection.js"
+  },
+  "dependencies": {
+    "argon2": "^0.45.1",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.9",
+    "ejs": "^7.0.2",
+    "express": "^5.3.0",
+    "express-mongo-sanitize": "^2.2.0",
+    "express-rate-limit": "^8.7.1",
+    "express-session": "^1.19.0",
+    "helmet": "^8.3.0",
+    "nunjucks": "^3.2.4",
+    "pg": "^8.23.1",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.37.8",
+    "xss": "^1.0.17",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.5",
+    "eslint": "^4.0.0",
+    "jest": "^25.1.0",
+    "nodemon": "^3.1.14",
+    "sequelize-cli": "^6.6.5",
+    "typescript": "^7.0.2"
+  }
+}

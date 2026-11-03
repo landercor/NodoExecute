@@ -1,0 +1,14 @@
+<html%- include('layouts/utils') %>
+<body%- include('layouts/header', { tittle: 'Acceso no autorizado, Por favor inicie sesion nuevamente | node exam'}) %>
+
+<div class="constainer-unauthorized">
+    <h1 class="tittle-unauhorized" align="center">Acceso no autorizado</h1>
+    <p class="text-unauthorized" align="center">Por favor inicie sesión nuevamente para acceder a esta página.</p>
+    <div class="button-container" align="center">
+        <a href="<%= redirectTo %>" class="btn-primary">Ir a <%= redirectTo === '/login' ? 'iniciar sesión' : 'la página principal' %></a>
+    </div>
+</div>
+
+</main>
+</body>
+</html>

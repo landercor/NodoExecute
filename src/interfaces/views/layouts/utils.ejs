@@ -1,0 +1,11 @@
+var noNavbarPages = ['login', 'register', 'home', 'forgot-password', 'reset-password', '404', '500'];
+var noFootPages = ['reset-password', '404', '500'];
+shouldRender = function(component, pageId, locals) {
+    if (component === 'navbar' && typeof locals.hidenNavbar !== 'undefined') return !locals.hidenNavbar;
+    if (component === 'footer' && typeof locals.hidenFooter !== 'undefined') return !locals.hidenFooter;
+    if (component === 'navbar' ) return !noNavbarPages.includes(pageId);
+    if (component === 'footer') return !noFootPages.includes(pageId);
+    return true;
+};
+
+%>

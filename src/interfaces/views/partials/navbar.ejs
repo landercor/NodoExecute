@@ -1,0 +1,21 @@
+<header class = "navbar-content"> 
+    <div class="navar-left">
+        <div class="logo">
+            <figure class="imgae is-12x12">
+                <img src="/img/icons-text-file.png" alt="imagen de referencia">
+            </figure>
+            <h2>Node exam</h2>
+            <img src="/img/icons/icon-text-file.png" alt="imagen de renombre">
+        </div>
+        <span class="logo-text">node exam</span>
+    </div>
+
+    <% if (typeof hiddenBUscar === 'undefined' || hiddenBuscar === false) { %>
+        <div class="hidden-navbar-center">
+            <form action="/search" method="GET" class="search-form">
+                <input type="text" name="name" placeholder="Buscar..." class="search-input" required>
+                <button type="submit" name="search" class="search fa-search">
+            </form>
+        </div>
+    <% } %>
+</header>

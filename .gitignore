@@ -1,0 +1,29 @@
+# .gitignore
+#File of gitignore for the project security-tools-views-dev
+# Node modules
+
+node_modules/
+data
+dist
+.cache
+
+# Logs
+logs
+*.log
+
+#misc
+.DS_store
+
+#. local env files security unique for each developer
+
+.env
+env.local
+.env.*
+.env.example
+
+#. temp files
+.history/
+.lh/
+
+
+

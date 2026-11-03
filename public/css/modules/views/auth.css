@@ -1,0 +1,15 @@
+body { 
+    font-family: sans-serif;
+     max-width: 600px; 
+     margin: 4rem auto;
+    padding: 2rem;
+    text-align: center; 
+    }
+a {
+    display: inline-block; 
+    margin: 10px 24px; 
+    padding: 10px 24px; 
+    background: #ee5a24; color: #fff; 
+    border-radius: 8px; 
+    text-decoration: none; 
+}
