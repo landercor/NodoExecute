@@ -1,6 +1,6 @@
 import { registerUser, loginUser } from ""
 import { error } from "node:console";
-import ErrorGoals from "../../utils/ErrorGoals"
+import ErrorGoals from "../../../../../utils/ErrorGoals"
 
 export const register = (req, res) => {
     try {

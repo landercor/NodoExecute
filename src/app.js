@@ -1,4 +1,5 @@
 import express from 'express';
+import {sessionMiddleware} from "./interfaces/http/middleware/session.js";
 import healthRoutes from './interfaces/http/routes/health.routes.js';
 
 import {
@@ -7,7 +8,7 @@ import {
 } from './core/errors/error-handler.js';
 
 const app = express();
-
+app.use(sessionMiddleware);
 app.disable('x-powered-by');
 
 app.use(express.json({ limit: '10mb' }));
