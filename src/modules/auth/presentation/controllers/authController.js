@@ -1,63 +1,66 @@
-import { registerUser, loginUser } from ""
-import { error } from "node:console";
-import ErrorGoals from "../../../../../utils/ErrorGoals"
+/**
+ * Controlador de autenticación (capa de presentación).
+ * Recibe req/res, llama a los casos de uso y devuelve respuestas HTTP.
+ */
 
-export const register = (req, res) => {
+import { RegisterUserUseCase } from '../../application/use-cases/RegisterUserUseCase.js';
+import { LoginUserUseCase } from '../../application/use-cases/LoginUserUseCase.js';
+import { UserRepositoryImpl } from '../../infrastructure/persistence/repositories/UserRepositoryImpl.js';
+
+// Inyección de dependencias: el controlador recibe los casos de uso
+// que a su vez reciben el repositorio de persistencia.
+const userRepository = new UserRepositoryImpl();
+const registerUserUseCase = new RegisterUserUseCase({ userRepository });
+const loginUserUseCase = new LoginUserUseCase({ userRepository });
+
+export const register = async (req, res) => {
     try {
-        const {  username, email, password } = req.body;
-        const user = registerUser(username, email, password);
-
-        res.status(201).json({ message: ErrorGoals[201], user});
+        const user = await registerUserUseCase.execute(req.body);
+        res.status(201).json({ message: 'Usuario registrado con éxito', user });
     } catch (error) {
-        res.status(400).json({ error: error.message });
+        const status = error.status || 400;
+        res.status(status).json({ error: error.message });
     }
 };
 
-export const login = (req, res) => {
+export const login = async (req, res) => {
     try {
-        const { email, password } = req.body;
-        const user = loginUser(email, password);
-
+        const user = await loginUserUseCase.execute(req.body);
+        // Iniciar sessión: guardar userId en la sessión
         req.session.userId = user.id;
-        req.session.username = user.username;
+        req.session.email = user.email;
         req.session.role = user.role;
-        
-        res.status(200).json({ message: error.message });
-    }catch (error) {
-        res.status(400).json({ error: error.message});
+        res.status(200).json({ message: 'Sessión iniciada con éxito', user });
+    } catch (error) {
+        const status = error.status || 401;
+        res.status(status).json({ error: error.message });
     }
 };
 
 export const logout = (req, res) => {
-
     req.session.destroy((err) => {
         if (err) {
-            return res.status(500).json({ message: 'logout fialed'});
+            return res.status(500).json({ error: 'Error al cerrar sessión' });
         }
-
-        res.clearCookie('connect.sid',  {
+        res.clearCookie('connect.sid', {
             path: '/',
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
-            sameTime: 'lax'
+            sameSite: 'lax',
         });
-        res.status(200).json({ message: 'logout successful'});
+        res.status(200).json({ message: 'Sessión cerrada con éxito' });
     });
 };
 
 export const profile = (req, res) => {
-    // 1. Verificar que el usuario este autenticado revisando la sesion
-    // Si no hay userId en la sesion, no esta logueado
     if (!req.session || !req.session.userId) {
-        return res.status(401).json({ error: ErrorGoals[401] });
+        return res.status(401).json({ error: 'No autenticado' });
     }
-
-    // 2. Si esta autenticado, devolver los datos de la sesion (sin password)
     res.status(200).json({
         user: {
             id: req.session.userId,
-            username: req.session.username,
-            role: req.session.role
-        }
+            email: req.session.email,
+            role: req.session.role,
+        },
     });
 };
