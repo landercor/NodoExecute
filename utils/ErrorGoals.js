@@ -20,4 +20,4 @@ export const DefaultMessages = object.freeze({
     [HttpStatus.NOT_FOUND]: 'Recurso no encontrado',
     [HttpStatus.CONFLICT]: 'Conflicto con la información',
     [HttpStatus.INTERNAL_SERVER_ERROR]: 'Error interno del servidor'
-})
+});
