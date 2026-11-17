@@ -1,6 +1,7 @@
 import express from 'express';
-import {sessionMiddleware} from "./interfaces/http/middleware/session.js";
+import { sessionMiddleware } from './interfaces/http/middleware/session.js';
 import healthRoutes from './interfaces/http/routes/health.routes.js';
+import authRoutes from './modules/auth/presentation/routes/auth.routes.js';
 
 import {
     notFoundHandler,
@@ -18,6 +19,7 @@ app.use(express.urlencoded({
 }));
 
 app.use('/health', healthRoutes);
+app.use('/auth', authRoutes);
 
 app.use(notFoundHandler);
 app.use(errorHandler);

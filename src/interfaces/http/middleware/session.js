@@ -1,14 +1,14 @@
 import session from 'express-session';
-import { JWT_SECRET, NODE_ENV, SESS_LIFETIME } from '../../../config/Config.js'; // Usar MemoryStore por defecto de express-session
+import Config from '../../../config/Config.js';
 
 export const sessionMiddleware = session({
-    secret: JWT_SECRET,
+    secret: Config.JWT_SECRET,
     resave: false,
     saveUninitialized: true,
     cookie: {
-        httpOnly: true,
-        secure: NODE_ENV === 'production',
-        maxAge: SESS_LIFETIME,
-        sameSite: 'lax'
-    }
+        httpOnly: Config.cookieHttpOnly,
+        secure: process.env.NODE_ENV === 'production',
+        maxAge: Config.sessionMaxAge,
+        sameSite: Config.cookieSameSite,
+    },
 });
