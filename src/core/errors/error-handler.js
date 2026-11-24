@@ -1,4 +1,10 @@
-/*rutas inexistentes*/
+/**rutas inexistentes
+ * @param {string} message
+ * @param {number} statusCode
+ * @param {string} method
+ * @param {string} path
+ */
+
 
 export const notFoundHandler = (req, res, next) => {
 
@@ -11,27 +17,20 @@ export const notFoundHandler = (req, res, next) => {
 }
 
 export function errorHandler(err, req, res, next) {
-
     const statusCode = err.status || 500;
-
-    const message = err.message || "Error de servidor interno";
-
-    res.status(statusCode).json ({
-
-        message: err.message,
-        method: req.method,
-        path: req.originalUrl,
-        status: statusCode,
-    });
 
     res.status(statusCode).json({
         success: false,
-        message: 
+        status: statusCode,
+        method: req.method,
+        path: req.originalUrl,
+        message:
             statusCode >= 500
-            ? 'Error de servidor interno'
-            : err.message,
-        ...(process.env.NODE_ENV === 'develoment' && {
+                ? 'Error de servidor interno'
+                : err.message,
+        ...(process.env.NODE_ENV === 'development' && {
             details: err.message,
+            stack: err.stack,
         }),
     });
 }
