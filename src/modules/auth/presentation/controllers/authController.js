@@ -15,10 +15,10 @@ const loginUserUseCase = new LoginUserUseCase({ userRepository });
 
 export const register = async (req, res) => {
     try {
-        const user = await registerUserUseCase.execute(req.body);
-        res.status(201).json({ message: 'Usuario registrado con éxito', user });
+        const { user, token} = await registerUserUseCase.execute(req.body);
+        res.status(201).json({ message: 'Usuario registrado con éxito', token, user });
     } catch (error) {
-        const status = error.status || 400;
+        const status = error.status || 401;
         res.status(status).json({ error: error.message });
     }
 };
@@ -26,16 +26,19 @@ export const register = async (req, res) => {
 export const login = async (req, res) => {
     try {
         const user = await loginUserUseCase.execute(req.body);
-        // Iniciar sessión: guardar userId en la sessión
-        req.session.userId = user.id;
-        req.session.email = user.email;
-        req.session.role = user.role;
+        
         res.status(200).json({ message: 'Sessión iniciada con éxito', user });
     } catch (error) {
         const status = error.status || 401;
         res.status(status).json({ error: error.message });
     }
 };
+
+    /**
+     * 
+     * @param {object} req  - verificacion exitosa de la sesion.
+     * @param {promise(string)} res - se generara una promesa del red.sesionToken.
+     */
 
 export const logout = (req, res) => {
     req.session.destroy((err) => {
@@ -53,14 +56,6 @@ export const logout = (req, res) => {
 };
 
 export const profile = (req, res) => {
-    if (!req.session || !req.session.userId) {
-        return res.status(401).json({ error: 'No autenticado' });
-    }
-    res.status(200).json({
-        user: {
-            id: req.session.userId,
-            email: req.session.email,
-            role: req.session.role,
-        },
+    res.status(200).json({ user: req.user
     });
 };
