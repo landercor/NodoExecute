@@ -4,6 +4,7 @@
  * Depende de AuthDomainService y UserRepository (inyectados).
  */
 import { AuthDomainService } from '../../domain/services/AuthDomainServices.js';
+import { JwtServices } from '../../../../core/security/jwt.js';
 
 export class LoginUserUseCase {
     /**
@@ -50,8 +51,16 @@ export class LoginUserUseCase {
         // Actualizar último inicio de sessión
         await this.userRepository.updateLastLogin(user.id, new Date());
 
+        const token = JwtServices.sign({
+             id: user.id,
+             email: user.email,
+             role: user.role,
+
+        });
+
         // Devolver datos seguros (sin passwordHash)
         return {
+            token,
             id: user.id,
             firstName: user.firstName,
             lastName: user.lastName,

@@ -25,5 +25,17 @@ env.local
 .history/
 .lh/
 
+#ingtest
+check-db.cjs
+check-db2.cjs
+check-env.mjs
+check-env2.mjs
+test-seq.mjs
+test-seq2.mjs
+test-sequelize.mjs
+test-sequelize2.mjs
+test-sequelize3.mjs
+
+
 
 
