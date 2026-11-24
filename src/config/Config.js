@@ -10,7 +10,9 @@ export const Config = {
     JWT_REFRESH_SECRET: process.env.JWT_REFRESH_SECRET || 'RefreshTokenSecretKeyForJWT!1mplemeteOF23453dYTojh3r',
     JWT_REFRESH_EXPIRATION: process.env.JWT_REFRESH_EXPIRATION || '7d', // 7 days
     SALT_ARAOUND: Number(process.env.SALT_ARAOUND) || 10,
-
+    CSRF_SECRET: process.env.CSRF_SECRET,
+    COOKIE_SECRET: process.env.COOKIE_SECRET,
+    
     clientCode: { 
         prefix: process.env.CLIENT_CODE_PREFIX || 'OPR',
         padding: Number(process.env.CLIENT_CODE_PADDING) || 5
